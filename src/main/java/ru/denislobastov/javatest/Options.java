@@ -22,10 +22,7 @@ public class Options {
                 case "-o" -> {
                     i++;
                     String rawPath = args[i];
-                    if (rawPath.startsWith("\\") || rawPath.startsWith("/")) {
-                        rawPath = rawPath.substring(1);
-                    }
-                    outputPath = Path.of(rawPath).normalize();
+                    outputPath = Path.of(normalizePath(rawPath)).normalize();
                 }
                 case "-p" -> {
                     i++;
@@ -34,6 +31,13 @@ public class Options {
                 default -> inputFiles.add(args[i]);
             }
         }
+    }
+
+    private String normalizePath(String rawPath) {
+        if (rawPath.startsWith("\\") || rawPath.startsWith("/")) {
+            return rawPath.substring(1);
+        }
+        return rawPath;
     }
 
     boolean isAppendMode(){
